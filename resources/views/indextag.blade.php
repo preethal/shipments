@@ -1,0 +1,76 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    {{ __('You are logged in!') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<table class="table table-bordered table-responsive-lg">
+<tr>
+<td>
+<a class="text-sm text-gray-700 dark:text-gray-500 underline" href="{{ url('home') }}">Homepage</a>
+</td>
+<td>
+  <form action="{{ url('add')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+  <button type="submit"> Create Article </button>
+</form>  
+</td>
+
+<td>
+    <form action="{{ url('index')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+  <button type="submit"> Manage Category </button>
+</form>
+</td>
+
+
+<td>
+    <form action="{{ url('tagindex')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+  <button type="submit"> Manage Tag </button>
+</form>
+</td>
+</tr>
+</table>
+<form action="{{ url('tagcreate')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+<button type="submit"> Create Tag </button>
+</form>
+<table class="table table-bordered table-responsive-lg">
+<tr>
+<th>Tag</th>
+<th>Actions</th>
+</tr>
+@foreach ($tags as $tag)
+<tr>
+<td>{{ $tag->name }}</td>
+<td>
+<form action="" method="POST">
+<a class="btn btn-primary" href="">Edit</a>
+@csrf
+@method('delete')
+<button type="submit" class="btn btn-danger">Delete</button>   
+</form>  
+</td>
+</tr>
+@endforeach
+</table>
+@endsection
+

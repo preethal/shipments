@@ -175,6 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // For add tags
+        \Conner\Tagging\Providers\TaggingServiceProvider::class,
+
     ],
 
     /*

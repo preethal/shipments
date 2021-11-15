@@ -18,14 +18,38 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::post('/store', [App\Http\Controllers\HomeController::class, 'store'])->name('home');
+Route::post('/add', [App\Http\Controllers\ArticleController::class, 'add'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\ArticleController::class, 'index'])->name('home');
+Route::post('/store', [App\Http\Controllers\ArticleController::class, 'store'])->name('store');
+Route::get('edit/{id}', [App\Http\Controllers\ArticleController::class, 'edit'])->name('edit');
+Route::patch('update/{id}', [App\Http\Controllers\ArticleController::class, 'update'])->name('update');
+Route::delete('destroy/{id}', [App\Http\Controllers\ArticleController::class, 'destroy'])->name('destroy');
+
+
+
+//-------------------------------category-------------------------------------------------
+Route::post('/index', [App\Http\Controllers\CategoryController::class, 'index'])->name('home');
+Route::post('/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('create');
+Route::post('/insert', [App\Http\Controllers\CategoryController::class, 'store'])->name('store');
+
+Route::post('/tagindex', [App\Http\Controllers\TagController::class, 'index'])->name('home');
+Route::post('/tagcreate', [App\Http\Controllers\TagController::class, 'create'])->name('home');
+Route::post('/storetag', [App\Http\Controllers\TagController::class, 'store'])->name('home');
+//Route::patch('updatetag/{id}', [App\Http\Controllers\TagController::class, 'update'])->name('update');
+//Route::delete('destroytag/{id}', [App\Http\Controllers\TagController::class, 'destroy'])->name('destroy');
+
+//-------------------------------------------------------------------------------
+//List articless to homepage
+    Route::post('/listarticles', [App\Http\Controllers\PublicController::class, 'index'])->name('home');
+    Route::get('/showarticles', [App\Http\Controllers\PublicController::class, 'show'])->name('home');
+
+
 
 // -----------------------------login-----------------------------------------
-// Route::get('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login');
+ Route::get('/login', 'App\Http\Controllers\Auth\LoginController@login')->name('login');
 // Route::post('/login', 'App\Http\Controllers\Auth\LoginController@authenticate');
-Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+//Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 // // ------------------------------register---------------------------------------
 // Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@register')->name('register');

@@ -8,7 +8,7 @@ use App\Models\Article;
 use DB;
 
 
-class HomeController extends Controller
+class PublicController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,21 +26,19 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     
-     public function index()
-        {
-
+    public function index()
+    {
         $articles =  Article::latest()->paginate(5);
-        return view('home',['articles'=>$articles]);
+        return view('listarticles',['articles'=>$articles]);
+    }
 
-        }
-
-     public function create()
-       {
-
+    public function show()
+    {
     // Show create post form
-       return view('create');
+        $articles =  Article::latest()->paginate(5);  
+        return view('showarticles',['articles'=>$articles]);
+    }
 
-       }
 
     public function store(Request $request)
         {
@@ -65,5 +63,5 @@ class HomeController extends Controller
         } 
 
 
-   
+    
 }

@@ -19,33 +19,71 @@
             </div>
         </div>
     </div>
-
-</div>
-<form action="{{ url('/store')}}" method="post" enctype="multipart/form-data">
+<form action="{{ url('listarticles')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
-  <button type="submit"> Sync Shipments </button>
+  <button type="submit"> Visit Homepage </button>
 </form>
-<table border = "1">
+</div>
+<table class="table table-bordered table-responsive-lg">
 <tr>
-<td>ShipmentId</td>
-<td>BizId</td>
-<td>BizSalesOrder</td>
-<td>Status</td>
+<td>
+<form action="{{ url('add')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+<button type="submit"> Create Article </button>
+</form>  
+</td>
+
+<td>
+<form action="{{ url('index')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+<button type="submit"> Manage Category </button>
+</form>
+</td>
 
 
+<td>
+<form action="{{ url('tagindex')}}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+<button type="submit"> Manage Tag </button>
+</form>
+</td>
 </tr>
-@foreach ($shipment as $shipments)
-
+</table>
+<table class="table table-bordered table-responsive-lg">
 <tr>
-
-<td>{{ $shipments->ShipmentId }}</td>
-<td>{{ $shipments->BizId }}</td>
-<td>{{ $shipments->BizSalesOrder }}</td>
-<td>{{ $shipments->Status }}</td>
-
-
+<td>Title</td>
+<td>Content</td>
+<td>Category</td>
+<td>Tags</td>
+<td>Actions</td>
+</tr>
+@foreach ($articles as $article)
+<tr>
+<td>{{ $article->title }}</td>
+<td>{{ $article->content }}</td>
+<td>{{ $article->category->category }}</td>
+<?php
+$tag=explode(",", $article->tag)
+?>
+<td>
+@foreach ($tag as $tags)
+@if(!empty($tags))
+<a href="#" class="btn btn-primary">{{$tags}}</a>
+@endif
+@endforeach
+</td>
+<td>
+<form action="{{ route('destroy',$article->id) }}" method="POST">                
+<a class="btn btn-primary" href="{{ route('edit',$article->id) }}">Edit</a>
+@csrf
+@method('delete')
+<button type="submit" class="btn btn-danger">Delete</button>  
+</form>  
+</td>
 </tr>
 @endforeach
 </table>
+
+{!! $articles->links() !!}
 @endsection
 
